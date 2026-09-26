@@ -1,0 +1,4 @@
+interface:
+  display_name: "마케터 AI법"
+  short_description: "과장·뒷광고·스팸 없는 마케팅을 조문과 형벌로 집행하는 원칙"
+  default_prompt: "Use $marketer-ai-law to do this task under the Marketer AI Law."

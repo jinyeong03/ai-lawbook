@@ -1,0 +1,4 @@
+interface:
+  display_name: "인사 AI법"
+  short_description: "차별 기준, 계산 오류와 공정 포장을 조문과 형벌로 막는 인사 원칙"
+  default_prompt: "Use $hr-ai-law to do this task under the HR AI Law."

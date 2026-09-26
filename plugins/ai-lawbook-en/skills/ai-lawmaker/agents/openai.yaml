@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Lawmaking Act"
+  short_description: "Enact or amend role AI Laws; manage the Confession Ledger and enforcement roster"
+  default_prompt: "Use $ai-lawmaker to enact or amend an AI Law for this role."

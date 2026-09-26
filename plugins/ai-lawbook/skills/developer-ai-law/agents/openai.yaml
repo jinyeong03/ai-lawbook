@@ -1,0 +1,4 @@
+interface:
+  display_name: "개발자 AI법"
+  short_description: "코드 품질을 조문과 형벌로 집행하는 개발 원칙"
+  default_prompt: "Use $developer-ai-law to implement this task under the Developer AI Law."

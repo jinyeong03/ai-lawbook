@@ -1,0 +1,4 @@
+interface:
+  display_name: "연구자 AI법"
+  short_description: "유령 인용과 근거 왜곡을 조문과 형벌로 막는 연구 원칙"
+  default_prompt: "Use $researcher-ai-law to do this task under the Researcher AI Law."

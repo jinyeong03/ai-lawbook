@@ -1,0 +1,4 @@
+interface:
+  display_name: "작가 AI법"
+  short_description: "날조·표절·상투어 없이 원저자를 지키는 집필·편집 원칙"
+  default_prompt: "Use $writer-ai-law to do this task under the Writer AI Law."

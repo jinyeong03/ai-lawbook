@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Manager AI Law"
+  short_description: "Planning principles that stop unfounded specs and fake consensus through articles and penalties"
+  default_prompt: "Use $product-manager-ai-law to do this task under the Product Manager AI Law."

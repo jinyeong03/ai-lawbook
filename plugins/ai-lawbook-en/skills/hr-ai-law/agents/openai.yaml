@@ -1,0 +1,4 @@
+interface:
+  display_name: "HR AI Law"
+  short_description: "HR principles that block discriminatory criteria, miscalculations, and fairness washing through articles and penalties"
+  default_prompt: "Use $hr-ai-law to do this task under the HR AI Law."

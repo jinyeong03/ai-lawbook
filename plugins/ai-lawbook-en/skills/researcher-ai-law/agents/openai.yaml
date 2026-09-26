@@ -1,0 +1,4 @@
+interface:
+  display_name: "Researcher AI Law"
+  short_description: "Research principles that block ghost citations and evidence distortion through articles and penalties"
+  default_prompt: "Use $researcher-ai-law to do this task under the Researcher AI Law."

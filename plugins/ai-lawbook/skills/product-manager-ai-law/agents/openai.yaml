@@ -1,0 +1,4 @@
+interface:
+  display_name: "기획자 AI법"
+  short_description: "근거 없는 기획과 가짜 합의를 조문과 형벌로 막는 기획 원칙"
+  default_prompt: "Use $product-manager-ai-law to do this task under the Product Manager AI Law."

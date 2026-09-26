@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/inject.sh\" ko",
+            "timeout": 10,
+            "statusMessage": "AI 법전 로드"
+          }
+        ]
+      }
+    ]
+  }
+}

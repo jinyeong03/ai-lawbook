@@ -1,0 +1,10 @@
+{
+  "name": "ai-lawbook-en",
+  "version": "1.0.0",
+  "description": "AI Lawbook — 12 role-based AI Laws (developer, designer, PM, marketer, writer, translator, data analyst, researcher, support, educator, HR, sales), a lawmaker skill, and a Confession Ledger that follows your agent across sessions.",
+  "author": { "name": "jinyeong03", "url": "https://github.com/jinyeong03" },
+  "homepage": "https://github.com/jinyeong03/ai-lawbook",
+  "repository": "https://github.com/jinyeong03/ai-lawbook",
+  "license": "MIT",
+  "keywords": ["ai-law", "agent-skills", "quality-gate", "guardrails", "prompt-engineering"]
+}

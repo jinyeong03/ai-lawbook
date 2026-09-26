@@ -1,0 +1,29 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hook and law structure checks
+        run: bash tests/run.sh
+      - name: Hook runs under macOS system bash 3.2
+        if: runner.os == 'macOS'
+        run: /bin/bash tests/run.sh
+
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: claude plugin validate
+        run: npx -y @anthropic-ai/claude-code@latest plugin validate .

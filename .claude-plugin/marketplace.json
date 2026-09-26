@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "ai-lawbook",
+  "description": "Put your AI agent under the law. Role-based AI Laws with penalties, verdicts, and a Confession Ledger.",
+  "owner": { "name": "jinyeong03", "url": "https://github.com/jinyeong03" },
+  "plugins": [
+    {
+      "name": "ai-lawbook",
+      "source": "./plugins/ai-lawbook",
+      "description": "AI 법전 (한국어) — 직무 AI법 12종 + 입법 스킬 + 반성문 장부",
+      "category": "productivity"
+    },
+    {
+      "name": "ai-lawbook-en",
+      "source": "./plugins/ai-lawbook-en",
+      "description": "AI Lawbook (English) — 12 role AI Laws + lawmaker skill + Confession Ledger",
+      "category": "productivity"
+    }
+  ]
+}

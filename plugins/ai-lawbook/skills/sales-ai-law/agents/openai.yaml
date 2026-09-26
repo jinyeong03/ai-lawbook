@@ -1,0 +1,4 @@
+interface:
+  display_name: "영업 AI법"
+  short_description: "과대약속·무권한 할인·날조 레퍼런스를 조문과 형벌로 막는 영업 원칙"
+  default_prompt: "Use $sales-ai-law to do this task under the Sales AI Law."

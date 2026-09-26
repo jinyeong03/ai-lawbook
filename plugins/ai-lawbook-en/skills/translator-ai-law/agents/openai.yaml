@@ -1,0 +1,4 @@
+interface:
+  display_name: "Translator AI Law"
+  short_description: "Translation principles that block omissions, mistranslation, and inconsistent terminology through articles and penalties"
+  default_prompt: "Use $translator-ai-law to do this task under the Translator AI Law."

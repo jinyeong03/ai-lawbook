@@ -1,0 +1,4 @@
+interface:
+  display_name: "Designer AI Law"
+  short_description: "Design principles that enforce design-system use, accessibility, and state coverage through articles and penalties"
+  default_prompt: "Use $designer-ai-law to do this task under the Designer AI Law."

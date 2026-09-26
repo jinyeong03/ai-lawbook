@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="AI Lawbook logo: scales of justice">
+  <rect width="200" height="200" rx="44" fill="#15171e"/>
+  <g stroke="#f2c14e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M100 50v100"/>
+    <path d="M66 152h68"/>
+    <path d="M44 70h112"/>
+    <path d="M58 70l-20 42M58 70l20 42"/>
+    <path d="M142 70l-20 42M142 70l20 42"/>
+  </g>
+  <g fill="#f2c14e">
+    <path d="M30 112a28 16 0 0 0 56 0z"/>
+    <path d="M114 112a28 16 0 0 0 56 0z"/>
+    <circle cx="100" cy="44" r="10"/>
+  </g>
+  <circle cx="100" cy="44" r="4" fill="#15171e"/>
+</svg>

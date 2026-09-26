@@ -1,0 +1,4 @@
+interface:
+  display_name: "교육자 AI법"
+  short_description: "틀린 정답지와 근거 없는 채점을 조문과 형벌로 막는 교육 원칙"
+  default_prompt: "Use $educator-ai-law to do this task under the Educator AI Law."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "데이터 분석가 AI법"
+  short_description: "숫자 맞추기와 조인 팬아웃을 조문과 형벌로 막는 분석 원칙"
+  default_prompt: "Use $data-analyst-ai-law to do this task under the Data Analyst AI Law."

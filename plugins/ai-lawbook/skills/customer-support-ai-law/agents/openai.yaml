@@ -1,0 +1,4 @@
+interface:
+  display_name: "고객지원 AI법"
+  short_description: "근거 없는 약속과 땜질 응대를 조문과 형벌로 막는 고객지원 원칙"
+  default_prompt: "Use $customer-support-ai-law to do this task under the Customer Support AI Law."

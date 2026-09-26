@@ -1,0 +1,10 @@
+{
+  "name": "ai-lawbook",
+  "version": "1.0.0",
+  "description": "AI 법전 — 12개 직무 AI법(개발·디자인·기획·마케팅·글쓰기·번역·데이터·연구·CS·교육·인사·영업)과 입법 스킬, 세션마다 따라오는 반성문 장부.",
+  "author": { "name": "jinyeong03", "url": "https://github.com/jinyeong03" },
+  "homepage": "https://github.com/jinyeong03/ai-lawbook",
+  "repository": "https://github.com/jinyeong03/ai-lawbook",
+  "license": "MIT",
+  "keywords": ["ai-law", "agent-skills", "quality-gate", "korean", "prompt-engineering"]
+}

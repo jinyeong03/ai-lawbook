@@ -1,0 +1,4 @@
+interface:
+  display_name: "Educator AI Law"
+  short_description: "Education principles that block wrong answer keys and evidence-free grading through articles and penalties"
+  default_prompt: "Use $educator-ai-law to do this task under the Educator AI Law."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writer AI Law"
+  short_description: "Writing and editing principles that block fabrication, plagiarism, and clichés and protect the original author through articles and penalties"
+  default_prompt: "Use $writer-ai-law to do this task under the Writer AI Law."

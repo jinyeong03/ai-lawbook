@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 입법 기본법"
+  short_description: "새 직무 AI법 제정·개정과 반성문 장부·시행 명부 관리"
+  default_prompt: "Use $ai-lawmaker to enact or amend an AI Law for this role."

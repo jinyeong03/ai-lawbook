@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sales AI Law"
+  short_description: "Sales principles that block overpromising, unauthorized discounts, and fabricated references through articles and penalties"
+  default_prompt: "Use $sales-ai-law to do this task under the Sales AI Law."

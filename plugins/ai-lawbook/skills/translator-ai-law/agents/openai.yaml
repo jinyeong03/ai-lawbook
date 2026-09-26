@@ -1,0 +1,4 @@
+interface:
+  display_name: "번역가 AI법"
+  short_description: "누락·오역·용어 불일치를 조문과 형벌로 집행하는 번역 원칙"
+  default_prompt: "Use $translator-ai-law to do this task under the Translator AI Law."

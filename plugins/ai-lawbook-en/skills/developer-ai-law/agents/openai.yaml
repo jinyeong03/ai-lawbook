@@ -1,0 +1,4 @@
+interface:
+  display_name: "Developer AI Law"
+  short_description: "Development principles that enforce code quality through articles and penalties"
+  default_prompt: "Use $developer-ai-law to implement this task under the Developer AI Law."

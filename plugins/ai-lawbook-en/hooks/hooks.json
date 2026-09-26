@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/inject.sh\" en",
+            "timeout": 10,
+            "statusMessage": "Loading AI Lawbook"
+          }
+        ]
+      }
+    ]
+  }
+}

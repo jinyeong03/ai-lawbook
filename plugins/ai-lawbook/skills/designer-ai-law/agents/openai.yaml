@@ -1,0 +1,4 @@
+interface:
+  display_name: "디자이너 AI법"
+  short_description: "디자인 시스템·접근성·상태 설계를 조문과 형벌로 집행하는 디자인 원칙"
+  default_prompt: "Use $designer-ai-law to do this task under the Designer AI Law."
