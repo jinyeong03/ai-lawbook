@@ -61,6 +61,30 @@ mkdir -p "$TMP/bin"
 for t in bash awk grep tr cat dirname; do ln -sf "$(command -v "$t")" "$TMP/bin/$t"; done
 check "no jq: plain-text fallback" 'HOOK_PATH="$TMP/bin" hook | grep -q "테스트 미실행 통과 주장"'
 
+# SessionStart context does not reach subagents, so the same payload is injected again on SubagentStart.
+echo "subagents"
+hook_ev() { local ev="$1"; shift; env -i PATH="${HOOK_PATH:-$PATH}" HOME="$TMP/home" CLAUDE_PLUGIN_ROOT="$KO" "$@" bash "$KO/hooks/inject.sh" ko "$ev"; }
+sub() { hook_ev SubagentStart "$@"; }
+subctx() { sub "$@" | jq -r '.hookSpecificOutput.additionalContext'; }
+sub_cmd() { jq -r '.hooks.SubagentStart[0].hooks[0].command // empty' "$1"; }
+SUB_KO='/hooks/inject.sh" ko SubagentStart'
+SUB_EN='/hooks/inject.sh" en SubagentStart'
+check "SubagentStart hook registered (ko)" 'sub_cmd "$KO/hooks/hooks.json" | grep -qF "$SUB_KO"'
+check "SubagentStart hook registered (en)" 'sub_cmd "$EN/hooks/hooks.json" | grep -qF "$SUB_EN"'
+printf 'developer-ai-law\n' > "$TMP/home/.claude/ai-lawbook/enabled-laws"
+check "subagent: event name is SubagentStart" '[ "$(sub | jq -r .hookSpecificOutput.hookEventName)" = SubagentStart ]'
+check "subagent: law body injected" 'subctx | grep -q "^# 개발자 AI법"'
+check "subagent: ledger injected" 'subctx | grep -q "테스트 미실행 통과 주장"'
+check "subagent: header says the laws bind subagents" 'subctx | grep -q "하위 에이전트"'
+check "subagent: no status message per spawn" '[ "$(sub | jq -r ".systemMessage // \"none\"")" = none ]'
+check "session: header has no subagent note" '! ctx | grep -q "하위 에이전트"'
+check "session: event name stays SessionStart" '[ "$(hook | jq -r .hookSpecificOutput.hookEventName)" = SessionStart ]'
+check "unknown event falls back to SessionStart" '[ "$(hook_ev Bogus | jq -r .hookSpecificOutput.hookEventName)" = SessionStart ]'
+check "english subagent header" 'env -i PATH="$PATH" HOME="$TMP/home" CLAUDE_PLUGIN_ROOT="$EN" bash "$EN/hooks/inject.sh" en SubagentStart | jq -r .hookSpecificOutput.additionalContext | grep -q "subagent"'
+check "no jq: subagent plain-text fallback without status line" 'out="$(HOOK_PATH="$TMP/bin" sub)"; printf "%s" "$out" | grep -q "테스트 미실행 통과 주장" && ! printf "%s" "$out" | grep -q "^AI 법전:"'
+rm "$TMP/home/.claude/ai-lawbook/enabled-laws" "$TMP/home/.claude/ai-lawbook/confessions.md"
+check "subagent: nothing to inject, silent" '[ -z "$(sub)" ]'
+
 echo "laws"
 ko_names="$(cd "$KO/skills" && ls -d */ 2>/dev/null | tr -d / | sort)"
 en_names="$(cd "$EN/skills" && ls -d */ 2>/dev/null | tr -d / | sort)"

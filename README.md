@@ -131,6 +131,10 @@ The hook then injects the full text at session start, resume, and after compacti
 not to load it again. Each enforced law adds roughly 20–35 KB of context, so enforce the laws
 for the work you actually do.
 
+Subagents (Task subagents, workflow agents) do not inherit what SessionStart injected, so a SubagentStart
+hook injects the same laws and ledger into every subagent as well — silently, without a status message per
+spawn. Budget the same 20–35 KB per law for each subagent.
+
 ### Codex and other Agent Skills tools
 
 Every law is a plain [Agent Skills](https://agentskills.io) folder with a Codex `agents/openai.yaml`.
@@ -147,7 +151,7 @@ Without the hook, each law still tells the agent to read and write the Confessio
 
 ```mermaid
 flowchart LR
-  S([Session start / resume / compact]) --> H[SessionStart hook]
+  S([Session start / resume / compact<br/>or subagent start]) --> H[SessionStart / SubagentStart hook]
   H --> R[(enabled-laws)]
   H --> L[(confessions.md)]
   R --> C[Law text in context]

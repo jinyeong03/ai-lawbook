@@ -11,6 +11,17 @@
           }
         ]
       }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/inject.sh\" ko SubagentStart",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }

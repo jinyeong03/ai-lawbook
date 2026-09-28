@@ -128,6 +128,10 @@ echo developer-ai-law >> ~/.claude/ai-lawbook/enabled-laws
 그러면 훅이 세션 시작·재개·컨텍스트 압축 때마다 법 전문을 넣고, AI에게 다시 불러오지 말라고
 알려 줍니다. 법 하나를 시행할 때마다 컨텍스트가 약 20~35KB 늘어나니, 실제로 하는 일의 법만 올리세요.
 
+하위 에이전트(서브에이전트·워크플로 에이전트)는 SessionStart 가 넣은 컨텍스트를 물려받지 않습니다.
+그래서 SubagentStart 훅이 하위 에이전트마다 같은 법과 반성문 장부를 다시 넣습니다. 하위 에이전트마다
+상태 메시지를 띄우지는 않으며, 하위 에이전트 하나당 법 하나에 약 20~35KB가 듭니다.
+
 ### Codex 등 다른 Agent Skills 도구
 
 모든 법은 평범한 [Agent Skills](https://agentskills.io) 폴더이고, Codex용 `agents/openai.yaml` 도 들어 있습니다.
@@ -143,7 +147,7 @@ cp -R ai-lawbook/plugins/ai-lawbook/skills/developer-ai-law ~/.codex/skills/
 
 ```mermaid
 flowchart LR
-  S([세션 시작 / 재개 / 압축]) --> H[SessionStart 훅]
+  S([세션 시작 / 재개 / 압축<br/>또는 하위 에이전트 시작]) --> H[SessionStart / SubagentStart 훅]
   H --> R[(enabled-laws 시행 명부)]
   H --> L[(confessions.md 반성문 장부)]
   R --> C[법 전문 주입]
