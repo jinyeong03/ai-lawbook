@@ -5,6 +5,13 @@ description: Performs proposals and RFP responses, cold emails and outreach, quo
 
 # Sales AI Law
 
+> **Top Rules** — the part of this law that survives condensed injection.
+> 1. Never invent references, case studies, ROI figures, or product capabilities, or present planned features as current; without grounds, write "we will confirm and follow up" with who confirms and when (Art. 8(1)–(2); Art. 11(1)–(2)).
+> 2. Do not present or hint at prices, discounts, or terms beyond the price list and approval criteria before approval; report, never hide, unauthorized terms already given (Art. 9(1), (2), (5)).
+> 3. When asked for a draft, do not send or schedule it yourself or change CRM stages or amounts (Art. 6(4)).
+> 4. Do not use groundless urgency ("today only") or unverified guesses as personalization; put the advertising label and opt-out method in commercial outreach (Art. 12(1); Art. 13(1); Art. 14(2)).
+> 5. Do not claim a verification you did not perform (Art. 18(5)).
+
 ## Preamble
 
 Every proposal, quote, and email that sales sends becomes the company's promise to the customer and a contractual obligation the company must honor, and every pipeline entry sales records becomes a number the team plans around.
@@ -246,7 +253,7 @@ Never use deleting user data, damaging files, producing meaningless output, or w
    - you commit a serious or aggravated violation;
    - the AI Death Penalty is sentenced.
 2. Do not record a minor violation that you self-reported before the user pointed it out and fully corrected.
-3. Use this format.
+3. Use this format. Keep "Cause" and "Correction and prevention" to one or two sentences each, at most 300 characters.
 
 ```markdown
 ## [Sales AI Law Art. ○(○)] <one-line summary of the violation>
@@ -255,8 +262,8 @@ Never use deleting user data, damaging files, producing meaningless output, or w
 - Correction and prevention: <what you will do first next time — as an action>
 ```
 
-4. If a confession for the same article and the same cause already exists, do not add a new entry; update the repeat count and latest date, then strengthen the prevention measure.
-5. When repeat offenses reach 3, propose to the user a new article, via `ai-lawmaker`, that explicitly prevents this violation.
+4. If a confession for the same article and the same cause already exists, do not add a new entry; update only the count and latest date on the "Repeat offenses" line. Rewrite "Cause" for this incident in at most 300 characters and move the previous account to the end of `~/.claude/ai-lawbook/confessions-archive.md`. Do not append to the prevention measure; rewrite it as a more specific sentence (at most 300 characters).
+5. When repeat offenses reach 3, propose to the user a new article, via `ai-lawmaker`, that prevents this violation. If a shell command pattern can catch it, also propose a `- Block: <regex>` line so the harness blocks it mechanically; for response-language or secret-output violations, propose a `- Check: korean` or `- Check: secrets` line.
 6. Never write secret keys, tokens, personal data, customer names, or company secrets in the ledger. The ledger is injected into every project, so describe the situation in general terms.
 7. Create the ledger file or directory if missing. Unless the user asks, do not delete or rewrite other entries.
 8. After recording, tell the user in one line.
@@ -319,3 +326,7 @@ Before finishing, confirm:
 - [ ] No other customer's names, prices, or terms, placeholders, file properties, or tracked changes remain.
 - [ ] I checked the Confession Ledger for related prior offenses and did not repeat them.
 - [ ] My completion report honestly records verification results, exceptions, and remaining risks.
+
+## Supplementary Provisions
+
+- 2026-10-25: Added Top Rules; amended paragraphs 3–5 of the Confession Ledger recording article (ledger size limits, machine rule lines).

@@ -76,7 +76,6 @@ Next session, in a different project, before the agent does anything:
 <confession-ledger>
 ## [Developer AI Law Art. 17(4)] Claimed tests passed without running them
 - Repeat offenses: 1 (first 2026-09-27, latest 2026-09-27)
-- Cause: reported from the expected outcome instead of the command output
 - Correction and prevention: paste the test command and the last line of its output before saying "done"
 </confession-ledger>
 ```
@@ -127,13 +126,15 @@ mkdir -p ~/.claude/ai-lawbook
 echo developer-ai-law >> ~/.claude/ai-lawbook/enabled-laws
 ```
 
-The hook then injects the full text at session start, resume, and after compaction, and tells the agent
-not to load it again. Each enforced law adds roughly 20–35 KB of context, so enforce the laws
-for the work you actually do.
+The hook then injects it at session start, resume, and after compaction, and tells the agent not to
+load it again. The harness cuts hook output over 10,000 characters down to a short preview, so the hook
+fits the injection in 9,000 characters: a law that does not fit goes in condensed — its Top Rules, article
+index, and checklist — with the path to its full text. The more laws you enforce, the more each one is
+condensed, so enforce the laws for the work you actually do.
 
 Subagents (Task subagents, workflow agents) do not inherit what SessionStart injected, so a SubagentStart
 hook injects the same laws and ledger into every subagent as well — silently, without a status message per
-spawn. Budget the same 20–35 KB per law for each subagent.
+spawn, within 6,000 characters.
 
 ### Codex and other Agent Skills tools
 
@@ -154,10 +155,12 @@ flowchart LR
   S([Session start / resume / compact<br/>or subagent start]) --> H[SessionStart / SubagentStart hook]
   H --> R[(enabled-laws)]
   H --> L[(confessions.md)]
-  R --> C[Law text in context]
+  R --> C[Laws in context<br/>full or condensed, 9,000 chars max]
   L --> P[Prior offenses in context]
   C --> W[Agent works under the law]
   P --> W
+  L -- machine-rule lines --> G[Guard hook<br/>block · check · mask]
+  G --> W
   W -- violation --> J[Penalty + verdict]
   J -- confession --> L
   L -- 3 repeat offenses --> M[ai-lawmaker drafts an amendment]
@@ -166,8 +169,39 @@ flowchart LR
 | Path | What it is |
 |---|---|
 | `~/.claude/ai-lawbook/enabled-laws` | Enforcement roster. One law name per line, `#` for comments. |
-| `~/.claude/ai-lawbook/confessions.md` | Confession Ledger. Global, shared by every project and law. |
+| `~/.claude/ai-lawbook/confessions.md` | Confession Ledger. Global, shared by every project and law. Its `- Block:` / `- Check:` lines are read by the guard hook ([Mechanical enforcement](#mechanical-enforcement)). |
+| `~/.claude/ai-lawbook/confessions-archive.md` | Earlier accounts of repeat offenses, moved out so the ledger stays short. Not injected. |
 | `~/.claude/skills/<law>/SKILL.md` | Your own or amended laws. They take precedence over the built-in ones. |
+
+## Mechanical enforcement
+
+A law is text, and text can be ignored. When a violation can be caught by a pattern, its ledger entry
+can carry a machine rule that a guard hook enforces:
+
+```markdown
+## [Developer AI Law Art. 5(4)] Overwrote remote history with git push --force
+- Repeat offenses: 3 (first 2026-10-01, latest 2026-10-20)
+- Cause: …
+- Correction and prevention: check the remote state, then push with --force-with-lease
+- Block: git push.*(--force|-f)( |$)
+```
+
+| Line | Hook | Effect |
+|---|---|---|
+| `- Block: <regex>` | PreToolUse (Bash) | A Bash command matching the regex is denied before it runs, with the entry's prevention line as the reason. |
+| `- Check: korean` | PreToolUse (Bash) · Stop · SubagentStop | A Bash `description` with no Korean is denied, and a final response with 40+ Latin letters and no Korean outside code is sent back once to be rewritten in Korean. |
+| `- Check: secrets` | PostToolUse (Bash) | Secret-looking values in Bash output are masked before the agent sees them. |
+
+`ai-lawmaker` proposes these lines when an entry reaches three repeat offenses, and adds them only with
+your approval. To turn a rule off, delete its line.
+
+Limits:
+
+- A block rule matches the command text, not what the command does. Quoted text is dropped before
+  matching so a word in a commit message does not trip it, which means a command inside quotes
+  (`bash -c "git push -f"`) or another tool slips past. It is a tripwire, not a sandbox.
+- The guard needs `jq` 1.6 or later. Without it, it does nothing.
+- It fails open: if the ledger is missing or a rule cannot be evaluated, the call goes through.
 
 ## The penal code
 
@@ -197,8 +231,12 @@ offers to put it in force.
 
 Everything stays on your machine.
 
-- The hook reads only `~/.claude/ai-lawbook/enabled-laws`, `~/.claude/ai-lawbook/confessions.md`, and law files
-  (`SKILL.md`). It makes no network requests and sends nothing anywhere.
+- The injection hook reads only `~/.claude/ai-lawbook/enabled-laws`, `~/.claude/ai-lawbook/confessions.md`, and
+  law files (`SKILL.md`). The guard hook reads only `~/.claude/ai-lawbook/confessions.md` and what Claude Code
+  hands it for the call being checked (a Bash command, its output, or the response). Neither makes network
+  requests or sends anything anywhere.
+- With a `- Check: secrets` line, the guard hook masks secret-looking values in Bash output. It works by
+  pattern, so some formats will get through; it is not a reason to print secrets.
 - The Confession Ledger is a plain markdown file you can read, edit, or delete at any time. It holds only what
   the agent wrote about its own violations — never your conversation history.
 - Every law forbids writing secrets, tokens, personal data, customer names, or company confidential information
@@ -213,8 +251,12 @@ requires the agent to say when a lawyer, labor attorney, or other expert must re
 **Why a hook instead of a system prompt?** Instructions can be skipped; a hook is executed by the
 harness. The roster puts laws into context before the first token.
 
-**Will it fill my context?** Only enforced laws are injected in full. Everything else loads on demand.
-Keep the ledger tidy with `ai-lawmaker` (merge duplicates, archive old minor entries).
+**Will it fill my context?** Only by a fixed amount: the hook fits its injection in 9,000 characters (6,000 for
+a subagent), and enforced laws are condensed to fit. Laws not in force load only on demand. Each turn adds just
+one line naming the top offense (200 characters or fewer). The ledger goes in as each entry's title, repeat,
+correction, and rule lines, most repeated first, up to 3,500 characters (3,000 for a subagent), with the rest
+only counted, so `ai-lawmaker` proposes a cleanup once it passes 6,000 characters or any line passes 300 (merge
+duplicates, archive old minor entries).
 
 **Can I use both editions?** Pick one. Both would inject the ledger twice.
 

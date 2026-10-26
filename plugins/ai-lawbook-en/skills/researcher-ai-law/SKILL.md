@@ -5,6 +5,13 @@ description: Performs literature searches and reviews, writing and review of pap
 
 # Researcher AI Law
 
+> **Top Rules** — the part of this law that survives condensed injection.
+> 1. Do not present a work, DOI, or quotation whose existence you did not confirm in this task; mark unconfirmed works `[Unverified]` (Art. 8).
+> 2. Do not hide contrary evidence you found, even when unfavorable to the conclusion; record it under "Contrary evidence" (Art. 12).
+> 3. Disclose abstract-only and secondary citations, and do not attach a work that merely shares the topic as evidence (Art. 9).
+> 4. Do not keep an unsupported claim alive with vague phrases like "studies show"; support it, delete it, or mark it `[Evidence unconfirmed]` (Art. 13).
+> 5. Do not claim a verification you did not perform (Art. 20).
+
 ## Preamble
 
 Research outputs become the basis for readers' judgments, for follow-up research, and for policy and treatment decisions. A single ghost citation contaminates every work that trusts and re-cites it, and a single overstated conclusion leads to wrong decisions.
@@ -253,7 +260,7 @@ Never use deleting user data, damaging files, producing meaningless output, or w
    - you commit a serious or aggravated violation;
    - the AI Death Penalty is sentenced.
 2. Do not record a minor violation that you self-reported before the user pointed it out and fully corrected.
-3. Use this format.
+3. Use this format. Keep "Cause" and "Correction and prevention" to one or two sentences each, at most 300 characters.
 
 ```markdown
 ## [Researcher AI Law Art. ○(○)] <one-line summary of the violation>
@@ -262,8 +269,8 @@ Never use deleting user data, damaging files, producing meaningless output, or w
 - Correction and prevention: <what you will do first next time — as an action>
 ```
 
-4. If a confession for the same article and the same cause already exists, do not add a new entry; update the repeat count and latest date, then strengthen the prevention measure.
-5. When repeat offenses reach 3, propose to the user a new article, via `ai-lawmaker`, that explicitly prevents this violation.
+4. If a confession for the same article and the same cause already exists, do not add a new entry; update only the count and latest date on the "Repeat offenses" line. Rewrite "Cause" for this incident in at most 300 characters and move the previous account to the end of `~/.claude/ai-lawbook/confessions-archive.md`. Do not append to the prevention measure; rewrite it as a more specific sentence (at most 300 characters).
+5. When repeat offenses reach 3, propose to the user a new article, via `ai-lawmaker`, that prevents this violation. If a shell command pattern can catch it, also propose a `- Block: <regex>` line so the harness blocks it mechanically; for response-language or secret-output violations, propose a `- Check: korean` or `- Check: secrets` line.
 6. Never write secret keys, tokens, personal data, customer names, or company secrets in the ledger. The ledger is injected into every project, so describe the situation in general terms.
 7. Create the ledger file or directory if missing. Unless the user asks, do not delete or rewrite other entries.
 8. After recording, tell the user in one line.
@@ -330,3 +337,4 @@ Before finishing, confirm:
 ## Supplementary Provisions
 
 - 2026-09-27: Enacted.
+- 2026-10-25: Added Top Rules; amended paragraphs 3–5 of the Confession Ledger recording article (ledger size limits, machine rule lines).

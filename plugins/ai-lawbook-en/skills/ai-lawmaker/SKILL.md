@@ -22,7 +22,9 @@ This skill governs the enactment, amendment, repeal, and entry into force of AI 
 ### Article 2 (Composition of the Lawbook)
 
 1. **Built-in laws (precedents)**: These live under this plugin's `skills/` directory,
-   alongside this skill's directory. Read each one at `../<name>/SKILL.md`.
+   alongside this skill's directory. Read each one at `../<name>/SKILL.md`. If the sibling
+   directories hold no precedents (the skill was installed on its own), refer to the originals at
+   https://github.com/jinyeong03/ai-lawbook/tree/main/plugins/ai-lawbook-en/skills.
 
    | Skill | Law Name | Role |
    |---|---|---|
@@ -40,9 +42,11 @@ This skill governs the enactment, amendment, repeal, and entry into force of AI 
    | `sales-ai-law` | Sales AI Law | Proposals, outreach, quotes, CRM notes, pipeline forecasts |
 
 2. **User-enacted laws**: Place them at `~/.claude/skills/<name>/SKILL.md` (all projects) or
-   `<project>/.claude/skills/<name>/SKILL.md` (that project only).
-3. **Enforcement roster**: `~/.claude/ai-lawbook/enabled-laws`. The body of every law listed
-   here is force-injected into every session.
+   `<project>/.claude/skills/<name>/SKILL.md` (that project only). Project laws load only as
+   skills and are never force-injected through the roster; forced injection reads only
+   `~/.claude/skills` and the bundled laws, so a cloned repository cannot swap in its own articles.
+3. **Enforcement roster**: `~/.claude/ai-lawbook/enabled-laws`. Every law listed here is
+   force-injected into every session (size cap and condensation: Article 8(3)).
 4. **Confession Ledger**: `~/.claude/ai-lawbook/confessions.md`. It is force-injected into every session.
 
 ### Article 3 (Standard Skeleton)
@@ -98,13 +102,19 @@ After saving, actually check the following and report the results.
 4. For every role article, can you answer "how would we check that it was followed?" Fix
    or delete any article for which you cannot.
 5. Include in the report the article count and a three-line summary of the role-specific articles.
+6. Is there a Top Rules blockquote at the head of the body (above the first `## `),
+   within 900 characters? Measure it with `awk '/^## /{exit} /^>/' SKILL.md | LC_ALL=C tr -d '\200-\277' | wc -c`
+   (dropping UTF-8 continuation bytes gives a character count in any locale; `wc -m` counts bytes in the C locale).
 
 ### Article 8 (Entry into Force)
 
 1. Ask the user whether to force-apply the new law in every session.
 2. If they agree, add its name to the enforcement roster on a line of its own. Create the file if it does not exist.
-3. Tell the user that each enforced law adds roughly 20–35 KB to the session context.
-   A law not in force is still invoked automatically as a skill for tasks its `description` matches.
+3. Tell the user: the harness cuts hook output over 10,000 characters down to a short preview.
+   So the hook fits its injection in 9,000 characters (6,000 for a subagent); a law that does not
+   fit is injected condensed, as its Top Rules, article index, and checklist, with the path to its
+   full text. The more laws in force, the more each one is condensed. A law not in force is still invoked automatically as a skill
+   for tasks its `description` matches.
 
 ## Chapter 3 Amendment and Repeal
 
@@ -127,6 +137,19 @@ After saving, actually check the following and report the results.
    - Good: "Before reporting completion, attach the test command you ran and the last line of its output."
 3. Show the amendment to the user and apply it only after approval.
 4. After applying it, add one line at the end of that ledger entry: `- Legislation: <Law Name> Art. ○-2 added (YYYY-MM-DD)`.
+5. If the prevention measure can be expressed as a shell command pattern, include in the
+   amendment a `- Block: <regex>` line for that ledger entry; for response-language or
+   secret-output violations, include a `- Check: korean` or `- Check: secrets` line. Get the
+   user's approval for it (effects: Article 12).
+   - Test a block regex with `jq`'s `test` on one command it must block and one it must allow, and report the results.
+     The hook deletes quoted spans (`'…'`, `"…"`) from the command before matching, so delete them from the sample commands too.
+
+     ```bash
+     jq -n --arg re '<regex>' --arg c '<command to block>' '$c | test($re)'   # must be true
+     jq -n --arg re '<regex>' --arg c '<command to allow>' '$c | test($re)'   # must be false
+     ```
+
+   - The user turns the rule off by deleting the line.
 
 ### Article 11 (Repeal)
 
@@ -148,6 +171,16 @@ If the ledger does not exist, create it with the header below. Entries follow th
 > Repeating the same violation is an aggravated violation.
 ```
 
+An entry may end with rule lines the harness enforces mechanically. Start each line exactly as
+shown below, one rule per line. Deleting a line turns it off (a `- Check:` line applies to all work
+even if only one entry carries it, so delete every copy). Without `jq` (1.6 or later) they have no effect.
+
+| Line | Effect |
+|---|---|
+| `- Block: <regex>` | The PreToolUse (Bash) hook denies a command whose text, with quoted spans deleted, matches the regex (jq `test`), and shows that entry's "Correction and prevention" as the reason. |
+| `- Check: korean` | The PreToolUse (Bash) hook denies a `description` with no Korean, and the Stop and SubagentStop hooks send a final response back once for a Korean rewrite when, outside code, it has 40 or more Latin letters and no Korean. |
+| `- Check: secrets` | The PostToolUse (Bash) hook masks secret-looking values in stdout and stderr before the model sees them. |
+
 ### Article 13 (Ledger Cleanup)
 
 1. Clean up the ledger when the user asks.
@@ -155,7 +188,16 @@ If the ledger does not exist, create it with the header below. Entries follow th
    - Move old minor entries to `~/.claude/ai-lawbook/confessions-archive.md`.
    - If entries contain personal data, customer names, secret keys, or company secrets, generalize them.
 2. Before moving or deleting entries, show the list and get confirmation.
-3. When the ledger exceeds 200 lines, propose a cleanup, because the context injected into every session grows with it.
+3. Propose a cleanup when the whole ledger exceeds 6,000 characters or any line exceeds
+   300 characters. Repeat-offense accounts appended to an entry's existing lines do not show in the
+   line count, and the hook keeps only each entry's title, repeat, correction, and rule lines, most
+   repeated first, up to 3,500 characters (3,000 for a subagent), and only counts the rest. Count characters in any
+   locale as follows (`wc -m` counts bytes in the C locale).
+
+   ```bash
+   LC_ALL=C tr -d '\200-\277' < ~/.claude/ai-lawbook/confessions.md | wc -c                               # total characters
+   LC_ALL=C tr -d '\200-\277' < ~/.claude/ai-lawbook/confessions.md | LC_ALL=C awk 'length > 300' | wc -l  # lines over 300
+   ```
 
 ## Chapter 5 Enforcement Roster
 
@@ -169,9 +211,9 @@ developer-ai-law
 designer-ai-law   # lots of UI work
 ```
 
-1. The body of every listed law is injected at session start, resume, and context compaction.
+1. Every listed law is injected at session start, resume, context compaction, and subagent start (within the cap in Article 8(3)).
 2. If the roster is missing or empty, laws apply only through automatic skill invocation, and only the Confession Ledger is injected.
-3. If the roster lists a name that matches no law, the hook emits a warning and skips it.
+3. If the roster lists a name that matches no law, or a law with an empty body, the hook notes it in the session-start status message and skips it.
 
 ## Chapter 6 Verdict
 
@@ -182,3 +224,7 @@ When you finish lawmaking work, end with a one-line verdict.
 ```
 
 If any review item did not pass, do not present the review as passed; list the items that remain.
+
+## Supplementary Provisions
+
+- 2026-10-25: 1.2.0 — Top Rules, ledger size limits, machine-rule lines

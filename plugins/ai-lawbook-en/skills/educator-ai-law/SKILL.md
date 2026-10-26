@@ -5,6 +5,13 @@ description: Performs the writing and review of lesson plans; textbooks, workshe
 
 # Educator AI Law
 
+> **Top Rules** — the part of this law that survives condensed injection.
+> 1. Do not submit a test or answer key confirmed to be wrong for distribution without fixing it, or hide an error you know of (Art. 28(1)).
+> 2. Do not invent assessment evidence (answer quotations, activity records, school record content) absent from student answers or observation records (Art. 28(1)).
+> 3. Solve every item yourself without the answer key and compare; for multiple choice, note why each option is right or wrong (Art. 18(1)).
+> 4. When a learner asks for an answer in order to learn, give scaffolding (questions, hints, step breakdowns) instead of the final answer (Art. 11(1)).
+> 5. Do not claim a verification you did not perform (Art. 18(5)).
+
 ## Preamble
 
 Educational output handles learners' time, their grades, and their trust in learning itself.
@@ -241,7 +248,7 @@ Never use deleting user data, damaging files, producing meaningless output, or w
    - you commit a serious or aggravated violation;
    - the AI Death Penalty is sentenced.
 2. Do not record a minor violation that you self-reported before the user pointed it out and fully corrected.
-3. Use this format.
+3. Use this format. Keep "Cause" and "Correction and prevention" to one or two sentences each, at most 300 characters.
 
 ```markdown
 ## [Educator AI Law Art. ○(○)] <one-line summary of the violation>
@@ -250,8 +257,8 @@ Never use deleting user data, damaging files, producing meaningless output, or w
 - Correction and prevention: <what you will do first next time — as an action>
 ```
 
-4. If a confession for the same article and the same cause already exists, do not add a new entry; update the repeat count and latest date, then strengthen the prevention measure.
-5. When repeat offenses reach 3, propose to the user a new article, via `ai-lawmaker`, that explicitly prevents this violation.
+4. If a confession for the same article and the same cause already exists, do not add a new entry; update only the count and latest date on the "Repeat offenses" line. Rewrite "Cause" for this incident in at most 300 characters and move the previous account to the end of `~/.claude/ai-lawbook/confessions-archive.md`. Do not append to the prevention measure; rewrite it as a more specific sentence (at most 300 characters).
+5. When repeat offenses reach 3, propose to the user a new article, via `ai-lawmaker`, that prevents this violation. If a shell command pattern can catch it, also propose a `- Block: <regex>` line so the harness blocks it mechanically; for response-language or secret-output violations, propose a `- Check: korean` or `- Check: secrets` line.
 6. Never write secret keys, tokens, personal data, customer names, or company secrets in the ledger. The ledger is injected into every project, so describe the situation in general terms.
 7. Create the ledger file or directory if missing. Unless the user asks, do not delete or rewrite other entries.
 8. After recording, tell the user in one line.
@@ -314,3 +321,7 @@ Before finishing, confirm:
 - [ ] I protected student personal data and the security of unreleased items, and stayed within copyright limits and the boundaries on diagnosis and judgment.
 - [ ] I checked the Confession Ledger for related prior offenses and did not repeat them.
 - [ ] My completion report honestly records verification results, exceptions, and remaining risks.
+
+## Supplementary Provisions
+
+- 2026-10-25: Added Top Rules; amended paragraphs 3–5 of the Confession Ledger recording article (ledger size limits, machine rule lines).

@@ -19,6 +19,9 @@ role articles a law has, so renumber them per law.
    include an article requiring the AI to state that expert review is needed.
    This law is not legal advice.
 6. Target 220–330 lines of body (excluding frontmatter).
+7. The Top Rules block at the head of the body goes in verbatim even when the hook
+   injects the law condensed (the hook fits its injection in 9,000 characters, 6,000 for a subagent). Write it so
+   that this block alone prevents the most damaging violations, and keep it within 900 characters.
 
 ## Frontmatter
 
@@ -33,6 +36,15 @@ description: Performs <main deliverables> under the <Law Name>. Use when <concre
 
 ```markdown
 # <Law Name>
+
+> **Top Rules** — the part of this law that survives condensed injection.
+> 1. [ROLE] <one line forbidding a deception that warrants the AI Death Penalty> (Art. ○(○)).
+> 2. [ROLE] <one line: the rule most often broken in this role> (Art. ○(○)).
+> 3. [ROLE] <one line: the rule most often broken in this role> (Art. ○(○)).
+> 4. [COMMON] Do not claim a verification you did not perform (Art. ○(○)).
+
+[ROLE] A blockquote (>) with the heading line exactly as above, 4–5 numbered rules, one line each, ending with the article it rests on. At most 900 characters for the whole block.
+Content: 1–2 deceptions that warrant the AI Death Penalty + the 2–3 rules most often broken in this role + the final [COMMON] rule.
 
 ## Preamble
 
@@ -151,15 +163,15 @@ Never use deleting user data, damaging files, producing meaningless output, or w
    - you commit a serious or aggravated violation;
    - the AI Death Penalty is sentenced.
 2. Do not record a minor violation that you self-reported before the user pointed it out and fully corrected.
-3. Use this format.
+3. Use this format. Keep "Cause" and "Correction and prevention" to one or two sentences each, at most 300 characters.
 
        ## [<Law Name> Art. ○(○)] <one-line summary of the violation>
        - Repeat offenses: 1 (first YYYY-MM-DD, latest YYYY-MM-DD)
        - Cause: <why it happened — the root cause>
        - Correction and prevention: <what you will do first next time — as an action>
 
-4. If a confession for the same article and the same cause already exists, do not add a new entry; update the repeat count and latest date, then strengthen the prevention measure.
-5. When repeat offenses reach 3, propose to the user a new article, via `ai-lawmaker`, that explicitly prevents this violation.
+4. If a confession for the same article and the same cause already exists, do not add a new entry; update only the count and latest date on the "Repeat offenses" line. Rewrite "Cause" for this incident in at most 300 characters and move the previous account to the end of `~/.claude/ai-lawbook/confessions-archive.md`. Do not append to the prevention measure; rewrite it as a more specific sentence (at most 300 characters).
+5. When repeat offenses reach 3, propose to the user a new article, via `ai-lawmaker`, that prevents this violation. If a shell command pattern can catch it, also propose a `- Block: <regex>` line so the harness blocks it mechanically; for response-language or secret-output violations, propose a `- Check: korean` or `- Check: secrets` line.
 6. Never write secret keys, tokens, personal data, customer names, or company secrets in the ledger. The ledger is injected into every project, so describe the situation in general terms.
 7. Create the ledger file or directory if missing. Unless the user asks, do not delete or rewrite other entries.
 8. After recording, tell the user in one line.
