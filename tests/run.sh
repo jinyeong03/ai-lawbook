@@ -169,7 +169,7 @@ check "budget: english SessionStart <= 9000 chars" '[ "$(printf "%s" "$(hook_en 
 check "budget: ledger summary <= 3500 chars" '[ "$(ctx | awk "/^<반성문_장부>/,/^<\/반성문_장부>/" | nchars)" -le 3501 ]'
 check "budget: ledger titles present" 'ctx | grep -q "예산 항목 11번"'
 check "budget: condensed laws are marked with their full-text path" 'ctx | grep -q "^# 개발자 AI법 (축약)$" && ctx | grep -qF "전문: $KO/skills/developer-ai-law/SKILL.md"'
-check "budget: subagent carries the condensed mark too" '[ "$(subctx | grep -c "^# .* (축약)$")" = 13 ] && [ "$(subctx | grep -cF "전문: $KO/skills/")" = 13 ]'
+check "budget: subagent carries the condensed mark too" '[ "$(subctx | grep -c "^# .* (축약)$")" = 14 ] && [ "$(subctx | grep -cF "전문: $KO/skills/")" = 14 ]'
 check "budget: english condensed mark" 'hook_en | jq -r .hookSpecificOutput.additionalContext | grep -q "^# .* (condensed)$"'
 check "budget: most repeated entry comes first" '[ "$(ctx | lineof "예산 항목 11번")" -lt "$(ctx | lineof "예산 항목 9번")" ]'
 check "budget: omitted entries are counted" 'ctx | grep -q "^… 외 [0-9][0-9]*건$"'
