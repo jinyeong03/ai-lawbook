@@ -266,7 +266,7 @@ check "guard: masking adds no missing keys" '[ "$(jq -n "$NO_STDERR" | guard | j
 echo "laws"
 ko_names="$(cd "$KO/skills" && ls -d */ 2>/dev/null | tr -d / | sort)"
 en_names="$(cd "$EN/skills" && ls -d */ 2>/dev/null | tr -d / | sort)"
-check "13 skills in the Korean plugin" '[ "$(printf "%s\n" "$ko_names" | grep -c .)" = 13 ]'
+check "14 skills in the Korean plugin" '[ "$(printf "%s\n" "$ko_names" | grep -c .)" = 14 ]'
 check "ko and en ship the same skills" '[ "$ko_names" = "$en_names" ]'
 
 for name in $ko_names; do

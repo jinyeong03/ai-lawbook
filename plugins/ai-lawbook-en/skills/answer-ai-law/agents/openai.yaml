@@ -1,0 +1,4 @@
+interface:
+  display_name: "Answer AI Law"
+  short_description: "Answer principles that enforce STE sentences, tables, and diagrams in every reply"
+  default_prompt: "Use $answer-ai-law to answer under the Answer AI Law."

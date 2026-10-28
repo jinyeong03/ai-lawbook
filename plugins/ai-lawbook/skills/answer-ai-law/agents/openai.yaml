@@ -1,0 +1,4 @@
+interface:
+  display_name: "답변 AI법"
+  short_description: "모든 답변을 한국어 STE 문장·표·그림으로 쓰게 하는 답변 원칙"
+  default_prompt: "Use $answer-ai-law to answer under the Answer AI Law."

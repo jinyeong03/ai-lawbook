@@ -1,0 +1,9 @@
+{
+  "name": "archify",
+  "version": "3.2.0",
+  "description": "Vendored copy of tt-a1i/archify 3.2 (upstream commit d605933, Apache-2.0) so the Answer AI Law can draw diagrams without downloading it — validated architecture, flow, sequence, ERD and other diagrams as standalone HTML.",
+  "author": { "name": "tt-a1i", "url": "https://github.com/tt-a1i" },
+  "homepage": "https://github.com/tt-a1i/archify",
+  "repository": "https://github.com/tt-a1i/archify",
+  "license": "Apache-2.0"
+}

@@ -82,7 +82,7 @@ $ npm test → 128 passed, 0 failed
 
 ## 법전 목록
 
-12개 법이 모두 한국어·영어로 있고, 같은 [표준 골격](plugins/ai-lawbook/skills/ai-lawmaker/references/law-skeleton.md)을 따릅니다.
+13개 법이 모두 한국어·영어로 있고, 같은 [표준 골격](plugins/ai-lawbook/skills/ai-lawmaker/references/law-skeleton.md)을 따릅니다.
 
 | 법 | AI가 이런 짓을 못 하게 막습니다 |
 |---|---|
@@ -98,6 +98,7 @@ $ npm test → 128 passed, 0 failed
 | 🍎 **교육자 AI법** | 틀린 정답지, 학습 대신 정답만 주기, 학생 개인정보 노출 |
 | 🤝 **인사 AI법** | 차별적 채용 기준, 금지된 면접 질문, 연차·수당 계산 오류를 확정 안내 |
 | 💼 **영업 AI법** | 없는 기능 약속, 권한 없는 할인, 가짜 레퍼런스 고객·ROI |
+| 💬 **답변 AI법** | 모든 답변에서 영어로 새기, 전보체, 용어 흔들림, 그림 대신 긴 글 (ASD-STE100 문장 규칙, archify 그림) |
 
 여기에 입법부 **`ai-lawmaker`** 가 있습니다. AI가 자꾸 틀리는 걸 말해 주면 우리 팀만의 법을
 제정하고, 기존 법을 개정하고, 세 번 쌓인 반성문을 새 조문으로 만듭니다.
@@ -112,6 +113,8 @@ $ npm test → 128 passed, 0 failed
 ```
 
 영어판은 `/plugin install ai-lawbook-en@ai-lawbook` 입니다. 두 판은 각자 훅을 가지고 있으니 **하나만** 설치하세요.
+
+답변 AI법은 구조도를 archify 로 그립니다. 내려받지 말고 이 마켓플레이스에 복제해 둔 사본을 설치하세요: `/plugin install archify@ai-lawbook`.
 
 설치하면 끝입니다. 작업이 맞으면 법이 스킬로 자동 호출되고, 반성문 장부는 세션마다 주입됩니다.
 

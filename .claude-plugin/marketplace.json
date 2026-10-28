@@ -2,7 +2,10 @@
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "ai-lawbook",
   "description": "Put your AI agent under the law. Role-based AI Laws with penalties, verdicts, and a Confession Ledger.",
-  "owner": { "name": "jinyeong03", "url": "https://github.com/jinyeong03" },
+  "owner": {
+    "name": "jinyeong03",
+    "url": "https://github.com/jinyeong03"
+  },
   "plugins": [
     {
       "name": "ai-lawbook",
@@ -14,6 +17,12 @@
       "name": "ai-lawbook-en",
       "source": "./plugins/ai-lawbook-en",
       "description": "AI Lawbook (English) — 12 role AI Laws + lawmaker skill + Confession Ledger",
+      "category": "productivity"
+    },
+    {
+      "name": "archify",
+      "source": "./plugins/archify",
+      "description": "archify 복제본 (tt-a1i/archify, Apache-2.0) — 답변 AI법이 내려받지 않고 쓰는 다이어그램 도구 / vendored diagram tool for the Answer AI Law",
       "category": "productivity"
     }
   ]

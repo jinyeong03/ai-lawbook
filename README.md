@@ -82,7 +82,7 @@ Next session, in a different project, before the agent does anything:
 
 ## The Lawbook
 
-Twelve laws, each in Korean and English, each built on the same [standard skeleton](plugins/ai-lawbook-en/skills/ai-lawmaker/references/law-skeleton.md).
+Thirteen laws, each in Korean and English, each built on the same [standard skeleton](plugins/ai-lawbook-en/skills/ai-lawmaker/references/law-skeleton.md).
 
 | Law | Stops the AI from… |
 |---|---|
@@ -98,6 +98,7 @@ Twelve laws, each in Korean and English, each built on the same [standard skelet
 | 🍎 **Educator** | wrong answer keys, handing students answers instead of scaffolding, leaking student data |
 | 🤝 **HR** | discriminatory criteria, illegal interview questions, miscalculated leave or overtime presented as settled law |
 | 💼 **Sales** | overpromising features, unauthorized discounts, fabricated reference customers and ROI |
+| 💬 **Answer** | every reply: drifting into another language, telegraphese, term drift, long prose where a diagram belongs (ASD-STE100 sentence rules, archify diagrams) |
 
 Plus **`ai-lawmaker`** — the legislature. Tell it what your AI keeps getting wrong, and it enacts a new law
 for your team, amends an existing one, or turns a three-time confession into a new article.
@@ -112,6 +113,8 @@ for your team, amends an existing one, or turns a three-time confession into a n
 ```
 
 Korean edition: `/plugin install ai-lawbook@ai-lawbook`. Install **one** edition — each ships its own hook.
+
+The Answer AI Law draws structure diagrams with archify. Install the vendored copy from this marketplace instead of downloading it: `/plugin install archify@ai-lawbook`.
 
 That's it: every law now auto-triggers as a skill when the task matches, and the Confession Ledger is
 injected into every session.
